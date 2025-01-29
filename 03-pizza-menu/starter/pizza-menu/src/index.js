@@ -19,13 +19,14 @@ function Header() {
     </header>
   );
 }
+
 function Menu() {
   return (
     <div className="menu">
       <h2>Catalog</h2>
-      <Nut />
-      <Nut />
-      <Nut />
+      <Nut name="5mm" material="Steel" price="0.05" />
+      <Nut name="15mm" material="Magnesium" price="62" />
+      <Nut name="0.255mm" material="Diamant" price="632" />
     </div>
   );
 }
@@ -37,8 +38,15 @@ function Footer() {
   );
   // return React.createElement("footer", null, "We're here to help");
 }
-function Nut() {
-  return <h2>NUTTIN</h2>;
+function Nut(props) {
+  return (
+    <div className="pizza">
+      <p>
+        {props.material} {props.name} Nut
+      </p>
+      <p>{props.price} $</p>
+    </div>
+  );
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
