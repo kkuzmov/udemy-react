@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
@@ -12,12 +13,16 @@ function App() {
 }
 
 function Header() {
-  return <h1>Nuts 'N Bolts </h1>;
+  return (
+    <header className="header">
+      <h1>Nuts 'N Bolts </h1>
+    </header>
+  );
 }
 function Menu() {
   return (
-    <div>
-      <h2>Please, inspect our catalog</h2>
+    <div className="menu">
+      <h2>Catalog</h2>
       <Nut />
       <Nut />
       <Nut />
@@ -26,7 +31,7 @@ function Menu() {
 }
 function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       <p>We're here to hizzelp.</p>
     </footer>
   );
