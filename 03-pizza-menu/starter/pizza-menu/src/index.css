@@ -12,10 +12,10 @@ html {
 
 body {
   font-family: 'Roboto Mono', sans-serif;
-  color: #252525;
+  color: #F5F5F5;
   font-weight: 400;
-  background-color: #f7f2e9;
-  border-bottom: 1.6rem solid #edc84b;
+  background-color: #1B365D;
+  border-bottom: 1.6rem solid #FFD700;
   min-height: 100vh;
   padding: 3.2rem;
   padding-bottom: 6rem;
@@ -39,7 +39,7 @@ body {
 
 .header h1 {
   /* Non-accessible color */
-  color: #edc84b;
+  color: #FFD700;
   /* color: #af8602; */
 
   text-transform: uppercase;
@@ -58,7 +58,7 @@ body {
   content: '';
   height: 3px;
   width: 12rem;
-  background-color: #edc84b;
+  background-color: #FFD700;
   position: absolute;
   top: calc(50% - 1px);
 }
@@ -100,20 +100,53 @@ body {
 
 .nuts {
   list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 4.8rem;
 }
 
 .nut {
   display: flex;
+  align-items: center;
   gap: 3.2rem;
+  justify-content: space-between;
+  transition: all .2s;
+  box-shadow: 8px 8px 15px #4682B4, -8px -8px 0px rgba(70, 130, 180, 0.25);
+  padding: 10px;
+}
+
+.nut:hover {
+  transform: scale(1.02);
+  box-shadow: 8px 8px 0px #4682B4, -8px -8px 0px rgba(70, 130, 180, 0.25);
+
+
+}
+
+.nut__name {
+  width: 25%;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.nut__description {
+  width: 35%;
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
+}
+
+.nut__price {
+  width: 5%;
+  font-size: 2rem;
 }
 
 .nut img {
   width: 12rem;
   aspect-ratio: 1;
   align-self: start;
+  border-radius: 5px;
+  border: 3px solid #FFD700;
 }
 
 .nut div {
@@ -123,17 +156,8 @@ body {
   padding: 0.4rem 0;
 }
 
-.nut h3 {
-  font-size: 2rem;
-  font-weight: 400;
-}
+.nut h3 {}
 
-.nut p {
-  font-size: 1.4rem;
-  font-weight: 300;
-  font-style: italic;
-  margin-bottom: auto;
-}
 
 .nut span {
   display: block;
