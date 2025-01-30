@@ -112,14 +112,12 @@ body {
   justify-content: space-between;
   transition: all .2s;
   box-shadow: 8px 8px 15px #4682B4, -8px -8px 0px rgba(70, 130, 180, 0.25);
-  padding: 10px;
+  padding: 10px 20PX;
 }
 
 .nut:hover {
   transform: scale(1.02);
   box-shadow: 8px 8px 0px #4682B4, -8px -8px 0px rgba(70, 130, 180, 0.25);
-
-
 }
 
 .nut__name {
@@ -137,7 +135,7 @@ body {
 }
 
 .nut__price {
-  width: 5%;
+  width: 7%;
   font-size: 2rem;
 }
 
@@ -147,21 +145,6 @@ body {
   align-self: start;
   border-radius: 5px;
   border: 3px solid #FFD700;
-}
-
-.nut div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  padding: 0.4rem 0;
-}
-
-.nut h3 {}
-
-
-.nut span {
-  display: block;
-  font-size: 1.6rem;
 }
 
 .nut.sold-out {

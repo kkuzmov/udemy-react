@@ -15,7 +15,7 @@ const hardwareData = [
     description: "Carbon steel and zinc plating",
     price: 10,
     photoSrc: "images/hexbolt.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Lock Nut",
@@ -68,15 +68,8 @@ function Menu() {
 
   return (
     <ul className="nuts">
-      {allHardware.map((nut) => {
-        return (
-          <Nut
-            name={nut.name}
-            description={nut.description}
-            price={nut.price}
-            src={nut.photoSrc ? nut.photoSrc : "images/no-image.jpg"}
-          />
-        );
+      {allHardware.map((nutObj) => {
+        return <Nut obj={nutObj} />;
       })}
     </ul>
   );
@@ -89,16 +82,19 @@ function Footer() {
   );
   // return React.createElement("footer", null, "We're here to help");
 }
-function Nut(props) {
+function Nut({ obj }) {
   return (
-    <li className="nut">
-      <h3 className="nut__name">{props.name}</h3>
-      <p className="nut__description">{props.description}</p>
+    <li className={`nut ${obj.soldOut ? "sold-out" : ""}`}>
+      <h3 className="nut__name">{obj.name}</h3>
+      <p className="nut__description">{obj.description}</p>
       <img
-        src={props.src ? props.src : "images/no-image.png"}
-        alt={props.name}
+        src={obj.photoSrc ? obj.photoSrc : "images/no-image.jpg"}
+        alt={obj.name}
       />
-      <p className="nut__price">{props.price}$</p>
+      <p className="nut__price">
+        {" "}
+        {obj.soldOut ? "SOLD OUT" : `${obj.price}$`}
+      </p>
     </li>
   );
 }
