@@ -69,6 +69,10 @@ function Counter() {
 
   return (
     <>
+      <input type="range" min="1" max="10" value={step} onChange={(e)=>{
+        e.preventDefault();
+        setStep(Number(e.target.value));
+      }}/>
       <div>Current step is {step}</div>
       <br></br>
       <button onClick={() => setStep((s) => s - 1)}>Step -</button>
