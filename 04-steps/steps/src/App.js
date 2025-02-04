@@ -60,7 +60,7 @@ function Counter() {
   const [count, setCount] = useState(0);
   const [step, setStep] = useState(1);
 
-  const date = new Date("june 21 2027");
+  const date = new Date(Date.now());
   date.setDate(date.getDate() + count);
   // callback function
   // function increaseCount() {
@@ -81,8 +81,11 @@ function Counter() {
       <br></br>
       <div>Current count is {count}.</div>
       <br></br>
-      <button onClick={() => setCount((c) => c - step)}>Decrease -</button>
-      <button onClick={() => setCount((c) => c + step)}>Increase +</button>
+      <button onClick={() => setCount((c) => c - step)}>-</button>
+      <input type="text" value={count} onChange={(e)=>{
+        setCount(Number(e.target.value))
+      }}/>
+      <button onClick={() => setCount((c) => c + step)}>+</button>
       <br></br>
       <br></br>
       <span>
@@ -93,6 +96,12 @@ function Counter() {
           : `${Math.abs(count)} days ago was: `}
       </span>
       <span>{date.toDateString()}</span>
+      <div>
+        {(count != 0 || step != 1) ? <button onClick={()=>{
+          setCount(0);
+          setStep(1);
+        }}>Reset</button> : null}
+      </div>
     </>
   );
 }
