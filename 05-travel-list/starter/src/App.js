@@ -23,13 +23,21 @@ function Logo() {
 function Form() {
   const [description, setDescription] = useState("");
   const [count, setCount] = useState(1);
+  const [items, setItems] = useState([]);
+
+  function handleAddItem(item) {
+    setItems((items)=> [...items, item]
+    );
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (!description) return;
-
     const newItem = { description, count, packed: false, id: Date.now() };
+
+    handleAddItem(newItem)
+
     setDescription("");
     setCount(1);
   }
