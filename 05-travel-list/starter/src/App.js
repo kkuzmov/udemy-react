@@ -14,7 +14,7 @@ export default function App() {
   }
 
   function handleToggleItem(id) {
-    setItems((items)=> items.map((item)=> item.id == id ? {...item, packed : !item.packed} : item)
+    setItems((items)=> items.map((item)=> item.id === id ? {...item, packed : !item.packed} : item)
     );
   }
 
@@ -23,7 +23,7 @@ export default function App() {
       <Logo />
       <Form onAddItems={handleAddItem}/>
       <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItem={handleToggleItem}/>
-      <Stats />
+      <Stats items={items}/>
     </div>
   );
 }
@@ -31,7 +31,6 @@ export default function App() {
 function Logo() {
   return <h1>🌴 Your Horizon 🧳</h1>;
 }
-
 function Form({onAddItems}) {
   const [description, setDescription] = useState("");
   const [count, setCount] = useState(1);
@@ -110,10 +109,17 @@ function PackingList({items, onDeleteItem, onToggleItem}) {
     </div>
   );
 }
-function Stats() {
+function Stats({items}) {
+  if(!items.length) {
+    return <p className="stats">Start adding items to your list 😊</p>
+  }
+  const totalNumberOfItems = items.length;
+  const packedItems = items.filter(item => item.packed).length;
+  const packedItemsPercentage = Math.round((packedItems / totalNumberOfItems) * 100);
+
   return (
     <footer className="stats">
-      <em>You have X items on your list and you packed X of them (X%)</em>
+      <em>{packedItemsPercentage === 100 ? 'Everything is ready!' : `You have ${totalNumberOfItems} items on your list and you packed ${packedItems} of them (${packedItemsPercentage}%)`}</em>
     </footer>
   );
 }
