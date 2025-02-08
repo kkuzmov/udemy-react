@@ -4,26 +4,38 @@ export default function App() {
   const [items, setItems] = useState([]);
 
   function handleAddItem(item) {
-    setItems((items)=> [...items, item]
-    );
+    setItems((items) => [...items, item]);
   }
 
   function handleDeleteItem(id) {
-    setItems((items)=> items.filter((item)=> item.id !== id)
-    );
+    setItems((items) => items.filter((item) => item.id !== id));
   }
 
   function handleToggleItem(id) {
-    setItems((items)=> items.map((item)=> item.id === id ? {...item, packed : !item.packed} : item)
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
     );
+  }
+
+  function handleClearList(){
+    const confirmedDeleteAllItems = window.confirm('Are you sure you want to delete all items in your list?');
+
+    if (confirmedDeleteAllItems) setItems([]);
   }
 
   return (
     <div className="app">
       <Logo />
-      <Form onAddItems={handleAddItem}/>
-      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItem={handleToggleItem}/>
-      <Stats items={items}/>
+      <Form onAddItems={handleAddItem} />
+      <PackingList
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
+      />
+      <Stats items={items} />
     </div>
   );
 }
@@ -31,11 +43,9 @@ export default function App() {
 function Logo() {
   return <h1>🌴 Your Horizon 🧳</h1>;
 }
-function Form({onAddItems}) {
+function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [count, setCount] = useState(1);
-
-  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +53,7 @@ function Form({onAddItems}) {
     if (!description) return;
     const newItem = { description, count, packed: false, id: Date.now() };
 
-    onAddItems(newItem)
+    onAddItems(newItem);
 
     setDescription("");
     setCount(1);
@@ -98,58 +108,91 @@ function Form({onAddItems}) {
     </form>
   );
 }
-function PackingList({items, onDeleteItem, onToggleItem}) {
-  const [sortBy, setSortBy] = useState('input');
+function PackingList({ items, onDeleteItem, onToggleItem, onClearList }) {
+  const [sortBy, setSortBy] = useState("input");
   let sortedItems;
 
-  if(sortBy === 'input'){
+  if (sortBy === "input") {
     sortedItems = items;
   }
-  if(sortBy === 'description'){
-    sortedItems = items.slice().sort((a, b) => a.description.localeCompare(b.description))
+  if (sortBy === "description") {
+    sortedItems = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
   }
-  if(sortBy === 'packed') {
-    sortedItems = items.slice().sort((a, b) => Number(a.packed) - Number(b.packed))
+  if (sortBy === "packed") {
+    sortedItems = items
+      .slice()
+      .sort((a, b) => Number(a.packed) - Number(b.packed));
   }
+
   return (
     <div className="list">
       <ul>
         {sortedItems.map((item) => (
-          <Item item={item} key={item.id} onDeleteItem={onDeleteItem} onToggleItem={onToggleItem}/>
+          <Item
+            item={item}
+            key={item.id}
+            onDeleteItem={onDeleteItem}
+            onToggleItem={onToggleItem}
+          />
         ))}
       </ul>
       <div className="actions">
-      <select value={sortBy} onChange={(e)=>{
-        setSortBy(e.target.value)
-      }}>
-        <option value="input">Sort by order of input</option>
-        <option value="description">Sort by description</option>
-        <option value="packed">Sort by packed status</option>
-      </select>
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+          }}
+        >
+          <option value="input">Sort by order of input</option>
+          <option value="description">Sort by description</option>
+          <option value="packed">Sort by packed status</option>
+        </select>
+        <button onClick={onClearList}>Clear list</button>
       </div>
     </div>
   );
 }
-function Stats({items}) {
-  if(!items.length) {
-    return <p className="stats">Start adding items to your list 😊</p>
+function Stats({ items }) {
+  if (!items.length) {
+    return <p className="stats">Start adding items to your list 😊</p>;
   }
   const totalNumberOfItems = items.length;
-  const packedItems = items.filter(item => item.packed).length;
-  const packedItemsPercentage = Math.round((packedItems / totalNumberOfItems) * 100);
+  const packedItems = items.filter((item) => item.packed).length;
+  const packedItemsPercentage = Math.round(
+    (packedItems / totalNumberOfItems) * 100
+  );
 
   return (
     <footer className="stats">
-      <em>{packedItemsPercentage === 100 ? 'Everything is ready!' : `You have ${totalNumberOfItems} items on your list and you packed ${packedItems} of them (${packedItemsPercentage}%)`}</em>
+      <em>
+        {packedItemsPercentage === 100
+          ? "Everything is ready!"
+          : `You have ${totalNumberOfItems} items on your list and you packed ${packedItems} of them (${packedItemsPercentage}%)`}
+      </em>
     </footer>
   );
 }
 function Item({ item, onDeleteItem, onToggleItem }) {
   return (
     <li>
-      <input type="checkbox" value={item.packed} onChange={()=>{onToggleItem(item.id)}}/>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => {
+          onToggleItem(item.id);
+        }}
+      />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.quantity} {item.description} <button onClick={()=>{onDeleteItem(item.id)}}>❌</button>
+        {item.quantity} {item.description}{" "}
+        <button
+          onClick={() => {
+            onDeleteItem(item.id);
+          }}
+        >
+          ❌
+        </button>
       </span>
     </li>
   );
